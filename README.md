@@ -31,67 +31,82 @@ RegisterNumber:  212220220002
 ##Liner regression using gradient descent
 
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
-data=pd.read_csv('/content/ex1.txt',header=None)
+import pandas as pd
+
+data=pd.read_csv("/content/ex1.txt", header=None)
+
 plt.scatter(data[0],data[1])
 plt.xticks(np.arange(5,30,step=5))
 plt.yticks(np.arange(-5,30,step=5))
-plt.xlabel("population of city(10,000s")
-plt.ylabel("profit($10,000")
-plt.title("profit prediction")
-plt.show()
-def computecost(x,y,theta):
-  m=len(y)
-  h=x.dot(theta)
-  se=(h-y)**2
-  return 1/(2*m)*np.sum(se)
-  data_n=data.values
+plt.xlabel("Population of City (10,000s)")
+plt.ylabel("Profit ($10,000)")
+plt.title("Profit Prediction")
+
+def computeCost(X,y,theta):
+  m=len(y) #length of the training data
+  h=X.dot(theta) #hypothesis
+  square_err=(h - y)**2
+
+  return 1/(2*m) * np.sum(square_err)     #returning
+
+data_n=data.values
 m=data_n[:,0].size
-x=np.append(np.ones((m,1)),data_n[:,0].reshape(m,1),axis=1)
+X=np.append(np.ones((m,1)),data_n[:,0].reshape(m,1),axis=1)
 y=data_n[:,1].reshape(m,1)
 theta=np.zeros((2,1))
-computecost(x,y,theta)
-def gradientd(x,y,theta,alpha,num_iters):
+ 
+computeCost(X,y,theta)  # Call the function
+
+def gradientDescent(X,y,theta,alpha,num_iters):
   m=len(y)
-  j_history=[]
+  J_history=[]
+
   for i in range(num_iters):
-    predictions=x.dot(theta)
-    error=np.dot(x.transpose(),(predictions-y))
-    descent=alpha*1/m*error
+    predictions = X.dot(theta)
+    error = np.dot(X.transpose(),(predictions -y))
+    descent=alpha * 1/m * error
     theta-=descent
-    j_history.append(computecost(x,y,theta))
-  return theta,j_history
-  theta,j_history=gradientd(x,y,theta,0.01,1500)
-print("h(x) ="+str(round(theta[0,0],2))+" + "+str(round(theta[1,0],2))+"x1")
-plt.plot(j_history)
-plt.xlabel("iteration")
-plt.ylabel("$j(\theta)$")
-plt.title("cost function using gradient descent")
+    J_history.append(computeCost(X,y,theta))
+
+  return theta, J_history
+
+theta,J_history = gradientDescent(X,y,theta,0.01,1500)
+print("h(x)  ="+str(round(theta[0,0],2))+" + "+str(round(theta[1,0],2))+"x1")
+
+plt.plot(J_history)
+plt.xlabel("Iteration")
+plt.ylabel("$J(\Theta)$")
+plt.title("Cost function using Gradient Descent")
+
 plt.scatter(data[0],data[1])
 x_value=[x for x in range(25)]
 y_value=[y*theta[1]+theta[0] for y in x_value]
-plt.plot(x_value,y_value,color="purple")
+plt.plot(x_value,y_value,color="g")
 plt.xticks(np.arange(5,30,step=5))
 plt.yticks(np.arange(-5,30,step=5))
-plt.xlabel("population of city(10,000s)")
-plt.ylabel("profit($10,000)")
-plt.title("profit prediction")
+plt.xlabel("Population of City (10,000s)")
+plt.ylabel("Profit ($10,000)")
+plt.title("Profit Prediction")
+
 def predict(x,theta):
   predictions=np.dot(theta.transpose(),x)
+
   return predictions[0]
-  predict1=predict(np.array([1,3.5]),theta)*10000
-print("for population=35000 we predict a profit of $"+str(round(predict1,0)))
+
+predict1=predict(np.array([1,3.5]),theta)*10000
+print("For population = 35,000,we predict a profit of $"+str(round(predict1,0)))
+
 predict2=predict(np.array([1,7]),theta)*10000
-print("for population=70000 we predict a profit of $"+str(round(predict2,0)))
+print("For population = 70,000,we predict a profit of $"+str(round(predict2,0)))
 
 */
 ```
 
 ## Output:
-![exp 3 1](https://user-images.githubusercontent.com/114275126/201040414-00efde67-aeb8-441e-922f-ac5b6fe29db7.PNG)
-![exp 3 2](https://user-images.githubusercontent.com/114275126/201040422-00cd5d12-ea0f-45cb-919e-ea965d4f194a.PNG)
-![exp 3 3](https://user-images.githubusercontent.com/114275126/201040446-c8f8dd90-5adc-492a-a6a0-6f25557fa881.PNG)
+![exp 1](https://user-images.githubusercontent.com/114275126/202222393-7f95016f-bd50-4693-bc7e-65d5acf6c935.PNG)
+![exp 2](https://user-images.githubusercontent.com/114275126/202222426-5b238409-4025-4b3b-bd34-58fe87f3cfb0.PNG)
+![exp 3](https://user-images.githubusercontent.com/114275126/202222548-4b2f3d44-b6cc-4a29-9284-59825d7c0e00.PNG)
 
 
 
