@@ -9,10 +9,15 @@ To write a program to predict the profit of a city using the linear regression m
 
 ## Algorithm
 1.Import the dataset and compute the cost value
+
 2.Calculate the gradient descent
+
 3.Find h(x) equation
+
 4.Plot the cost function using gradient descent
+
 5.Plot the profit prediction graph
+
 6.Check the prediction
  
 
